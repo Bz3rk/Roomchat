@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+    <!-- room form -->
+    <div class=" mb-5 form-container login-container container-sm">
+        <h4 class="text-uppercase fw-bold">create/update room</h4>
+        <form method="POST" action="">
+          {% csrf_token %}
+            <label for="Topics">Room Topic</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-card-heading"></i></span>
+                <input required type="text" list="topics" value="{{room.topic.name}}" name="topic" class="form-control" placeholder="Input your room Topic...">
+                <datalist id="topics">
+                    <select id="room-topics">
+                      {% for topic in topics %}
+                        <option value="{{topic.name}}">{{topic.name}}</option>
+                        {% endfor %}
+                    </select>
+                </datalist>
+            </div>
+    
+            <label for="Room name">Room Name</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-house"></i></span>
+                {{form.name}}
+            </div>
+
+            <label for="Room name">Room Description</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-chat"></i></span>
+                {{form.description}}
+            </div>
+            <button style="background-color: #696d97 !important;" class="mt-4 me-4 " type="submit"><a class="room-cancel" href="{{request.META.HTTP_REFERER}}">Cancel</a></button>
+            <button class="mt-4" type="submit">Submit</button>
+        </form>
+    </div>
+
+</main>
+{% endblock %}
+
+</body>
+
+</html>

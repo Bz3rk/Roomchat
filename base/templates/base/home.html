@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>Home</title>
+    {% endblock %}
+</head>
+
+<body>
+  {% block content %}
+  
+  {% include 'searchbar.html' %}
+    
+<main>
+  <div class="container p-2 pt-0">
+    <div class=" row">
+
+      <!-- Topics -->
+      <div class="col-lg-4">
+        <div class="topic-head">
+          <h5 class="text-uppercase fw-1">Topics</h5>  
+          <span class="pe-5 fw-bold">{{topics.count}} Topics</span>
+        </div>
+
+
+        <ul class="topic-links">
+          {% for topic in topics %}
+          <li class="fs-5 topic-links"><a href="#">{{topic.name}}</a><i class="bi bi-caret-left"></i>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- rooms -->
+      <div class="col-lg-6">
+        <h5 class="text-uppercase">Rooms</h5>
+        <!-- room card start -->
+        
+        {% for room in rooms %}
+        <div class="container rooms p-3 mb-2">
+          <div class="d-flex flex-row align-self-center">
+            <img class="profile-img align-self-center" src="static/img/8380015.jpg" alt="profile-img">
+            <a href="" class=" p-2 flex-fill align-self-center"><span
+              class="profile-email">{{room.host.email}}</span></a>
+              <span class="date-time p-3 align-self-center">{{room.updated | timesince}} ago</span>
+            </div>
+            <div class="p-3">
+              <h5><a class="about-room" href="{% url 'room_chat' room.id %}">{{room.name}}</a></h5>
+              <hr class="mt-5">
+              
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <i class="bi bi-people p-2"></i><span>10 joined</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <a  id="edit-room" class="page-link m-2" href="{% url 'update_room' room.id %}"><i class=" bi bi-pencil"></i></a>
+                  <a id="delete-room" class="page-link" href="{% url 'delete' room.id %}"><i class="bi bi-x"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- room card end -->
+
+          
+        <!-- pagination -->
+        <nav>
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a class="page-link" href="#">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+  </div>
+
+</main>
+    {% endblock %}
+</body>
+
+</html>
+

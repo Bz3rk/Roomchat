@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" href="static/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="static/css/style.css" />
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-md navbar-light background">
+      <div class="container-xxl">
+        <a class="navbar-brand ms-4" href="index.html">
+          <span style="letter-spacing: 8px;" class="fw-bold nav-text-color text-uppercase">botz-chat</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon "></span>
+        </button>
+        <div class=" ms-4 navbar-collapse justify-content-end me-4 " id="navbarText">
+          <ul class="navbar-nav ">
+            <li class="nav-item ">
+              <a class="nav-link active " aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" tabindex="-1" aria-disabled="true"><img class="profile-img align-self-center"
+                  src="static/img/8380015.jpg" alt="profile-img"></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+<main>
+    <!-- profile edit form -->
+    <div class="mb-5 form-container signup-container container-sm">
+        <h5 class="text-uppercase">edit your profile</h5>
+        <form>
+          
+          <label for="avatar">avatar</label>
+          <div class="input-group  mt-1 mb-2">
+            <span class="input-group-text icon-input"><i class="bi bi-person-badge"></i></span>
+            <input type="file" class="form-control" placeholder="Choose a username...">
+            </div>
+
+
+            <label for="Email">Username</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-person"></i></span>
+                <input type="email" class="form-control" placeholder="Enter your email...">
+            </div>
+
+            <label for="Email">Email</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-envelope-at"></i></span>
+                <input type="email" class="form-control" placeholder="Enter your email...">
+            </div>
+
+            <label for="loginPassword">Password</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-key"></i></span>
+                <input type="text" class="form-control" placeholder="Enter your password...">
+            </div>
+
+
+            <label for="Room name">Bio</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-chat-dots"></i></span>
+                <textarea class="form-control" name="Bio" cols="30" rows="4"></textarea>
+            </div>
+
+            <button style="background-color: #696d97 !important;" class="mt-4 me-4 " type="submit"><a class="room-cancel" href="">Cancel</a></button>
+            <button class="mt-4" type="submit">Submit</button>
+        </form>
+    </div>
+</main>
+
+<script src="static/js/bootstrap.js"></script>
+<script src="static/js/script.js"></script>
+
+</body>
+
+</html>
