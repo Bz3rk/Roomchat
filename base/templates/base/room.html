@@ -10,12 +10,14 @@
                 <div class="col-lg-8 col-md-12 col-sm-12 p-2">
                     <div class=" room-header">
                             <div class="d-flex flex-row align-items-center justify-content-between">
-                                <h6 class=" d-flex"><i class="bi bi-arrow-left p-2 "></i><a href="index.html"
-                                class="pt-2" style="font-family: 'Nova Square', sans-serif;">rooms</a></h6>
+                                <h6 class=" d-flex"><i class="bi bi-arrow-left p-2 "></i><a href="{% url 'home' %}"
+                                class="pt-2 text-uppercase" style="font-family: 'Nova Square', sans-serif;">rooms</a></h6>
+                                {% if room.host == request.user %}
                                 <div class="me-3 mb-2">
                                     <a href="{% url 'update_room' room.id %}"><i class="bi bi-pencil me-2"></i></a>
                                     <a href="{% url 'delete' room.id %}"><i class="bi bi-x-lg"></i></a>
                                 </div>
+                                {% endif %}
                             </div>
                     </div>
                     <div class="room-body p-3 mb-2">
@@ -29,8 +31,8 @@
                                 <img class="profile-img align-self-center" src="{% static 'img/8380015.jpg' %}"
                                     alt="profile-img">
                                 <a href="" class=" p-2 flex-fill align-self-center"><span
-                                        class="profile-email">@example@gmail.com</span></a>
-                                <span class="date-time p-3 align-self-center">Date and time</span>
+                                        class="profile-email">@ {{ room.host.first_name}} {{ room.host.last_name }}</span></a>
+                                <span class="date-time p-3 align-self-center">{{room.created|timesince}} ago</span>
                             </div>
 
                             <!-- chatbox messaging -->
@@ -44,8 +46,10 @@
                                                 class=" profile-email">@{{chat.author.first_name}} {{chat.author.last_name}}</span></a>
                                     </div>
                                     <small class="date-time align-self-center ">{{chat.created | timesince}} ago</small>
-                                    <span class="delete-icon align-self-center"><a href=""><i
+                                    {% if request.user == chat.author %}
+                                    <span class="delete-icon align-self-center"><a href="{% url 'delete_message' chat.id %}"><i
                                                 class="bi bi-x-lg"></i></a></span>
+                                    {% endif %}
                                 </div>
                                 <div class="message ms-5">{{chat.body}}</div>
                                 <hr style="color: #4f7cc2;">
@@ -81,7 +85,8 @@
                                     <div class="ps-2">
                                         <img class="profile-img" src="{% static 'img/8380015.jpg' %}" alt="profile-img">
                                         <a href="" class=" ps-2"><span
-                                                class="profile-email">@{{user.first_name}}</span></a>
+                                                class="profile-email">@{{user.first_name}} {{user.last_name}}</span></a>
+                                                <hr>
                                     </div>
                                 </div>
                                 {% endfor %}

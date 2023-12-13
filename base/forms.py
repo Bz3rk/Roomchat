@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from .models import Room, User
+from .models import Room, User, Avatar
 
 class Register(UserCreationForm):
     class Meta:
@@ -11,7 +11,7 @@ class Register(UserCreationForm):
         super(Register, self).__init__(*args, **kwargs)
 
 
-        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter your Email address...'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter your valid Email address...'})
         self.fields['first_name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter your First name...'})
         self.fields['last_name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter your Last name...'})
         self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter your Password...'})
@@ -44,3 +44,20 @@ class RoomForm(ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter your Room name...'})
         self.fields['description'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Room description...', 'rows': '4', 'cols':'30'})
 
+
+
+class AvatarForm(ModelForm):
+    class Meta:
+        model = Avatar
+        fields = ['image']
+
+    
+    
+        
+    def __init__(self, *args, **kwargs):
+        super(AvatarForm, self).__init__(*args, **kwargs)
+
+
+
+        self.fields['image'].widget.attrs.update({'class': 'form-control'})
+        

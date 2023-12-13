@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import Topic, Message, User, Room
-from .forms import Register, RoomForm
+from .models import Topic, Message, User, Room, Avatar
+from .forms import Register, RoomForm, AvatarForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -61,12 +64,30 @@ def logoutUser(request):
 
 # @login_required(login_url='login')
 def home(request):
-    topics = Topic.objects.all()
-    rooms = Room.objects.all()
-    context = {'topics': topics, 'rooms': rooms}
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    
+    topics = Topic.objects.all()[0:5]
+    rooms = Room.objects.filter(
+        Q(topic__name__icontains=q) |
+        Q(name__icontains=q) |
+        Q(description__icontains=q) |
+        Q(host__first_name__icontains=q)
+    )
+
+    p = Paginator(rooms, 5)
+    page_number = request.GET.get('page')
+
+
+    try:
+        page_obj = p.get_page(page_number) 
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+
+
+    context = {'topics': topics, 'rooms': rooms,  'page_obj':page_obj}
     return render (request, 'base/home.html', context)
 
-
+@login_required(login_url='login')
 def createRoom(request):
     topics = Topic.objects.all()
     host = request.user
@@ -87,7 +108,7 @@ def createRoom(request):
     context = {'form': form, 'topics': topics}
     return render(request, 'base/create_room.html', context)
 
-
+@login_required(login_url='login')
 def updateRoom(request, pk):
     room = Room.objects.get(id=pk)
     form = RoomForm(instance=room)
@@ -104,7 +125,7 @@ def updateRoom(request, pk):
     context = {'form': form, 'topics' : topics, 'room': room}
     return render(request, 'base/create_room.html', context)
 
-
+@login_required(login_url='login')
 def deleteRoom(request, pk):
     obj = Room.objects.get(id=pk)
     form = RoomForm(instance=obj)
@@ -114,25 +135,57 @@ def deleteRoom(request, pk):
     context = {'obj': obj}
     return render (request, 'base/delete.html', context)
 
+@login_required(login_url='login')
+def deleteMessage(request, pk):
+    user= request.user
+    obj = Message.objects.get(id=pk)
+    author = obj.author
+    if request.method == 'POST':
+        if user != author:
+            return HttpResponse('<h1>ACCESS DENIED</h1>')
+        else:
+            obj.delete()
+            return redirect('home')
+    context = {'obj': obj}
+    return render(request, 'base/delete.html', context)
+
 
 def roomChat(request, pk):
     user = request.user
     room = Room.objects.get(id=pk)
     chat_messages = room.message_set.all()
     members =  room.members.all() 
-
+    # print(members)
     if request.method == 'POST':
         body = request.POST.get('text')
-        print(body)
-        if body != "":
-            message = Message.objects.create(
-                room = room,
-                author = user,
-                body = body
-            )
-        return redirect('room_chat', pk=room.id)
+        # print(body)
+        if user.is_authenticated:
+            if body != "":
+                message = Message.objects.create(
+                    room = room,
+                    author = user,
+                    body = body
+                )
+                room.members.add(user)
+            return redirect('room_chat', pk=room.id)
+        else:
+            return redirect('login')
     
 
     context = {'room': room, 'chat_messages' : chat_messages, 'members' : members}
     return render(request, 'base/room.html', context)
 
+
+def selectAvatar(request):
+    avatars = Avatar.objects.all()
+    form = AvatarForm()
+    if request.method == 'POST':
+        form = AvatarForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            user.avatar = form.cleaned_data['image']
+            user.save()
+            return redirect('home')
+
+    context = {'avatars':avatars}
+    return render(request, 'base/avatar.html', context)

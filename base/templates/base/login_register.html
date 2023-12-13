@@ -35,18 +35,23 @@
             {% csrf_token %}
             <label for="signupUsername">{{form.email.label}}:</label>
             {{form.email}}
+            <span class="text-info">{{form.email.errors}}</span>
 
             <label for="signupEmail">{{form.first_name.label}}:</label>
             {{form.first_name}}
+            <span class="text-info">{{form.first_name.errors}}</span>
     
             <label for="signupPassword">{{form.last_name.label}}:</label>
             {{form.last_name}}
+            <span class="text-info">{{form.last_name.errors}}</span>
 
             <label for="signupPassword">{{form.password1.label}}:</label>
             {{form.password1}}
+            <span class="text-info">{{form.password1.errors}}</span>
 
             <label for="signupPassword">{{form.password2.label}}:</label>
             {{form.password2}}
+            <span class="text-info fst-italic lh-sm">{{form.password2.errors}}</span>
             <p class="mt-4">Already signed up?
               <a style="color: #4f7cc2;" class="ms-2" href="{% url 'login' %}">Login</a></p>
             <button class="mt-1" type="submit">Sign Up</button>
