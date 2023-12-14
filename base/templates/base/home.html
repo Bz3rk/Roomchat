@@ -46,8 +46,8 @@
         {% for page in page_obj %}
         <div class="container rooms p-3 mb-2">
           <div class="d-flex flex-row align-self-center">
-            <img class="profile-img align-self-center" src="static/img/8380015.jpg" alt="profile-img">
-            <a href="" class=" p-2 flex-fill align-self-center"><span
+            <img class="profile-img align-self-center" src="{{ page.host.avatar.image.url }}" alt="img for{{page.host.first_name}}">
+            <a href="{%url 'profile' page.host.id %}" class=" p-2 flex-fill align-self-center"><span
               class="profile-email">{{page.host.email}}</span></a>
               <span class="date-time p-3 align-self-center">{{page.updated | timesince}} ago</span>
             </div>

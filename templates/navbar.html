@@ -22,12 +22,12 @@
                 </li>
                 
                 <li class="nav-item ">
-                  <a class="nav-link active " aria-current="page" href="profile.html">profile</a>
+                  <a class="nav-link active " aria-current="page" href="{%url 'profile' request.user.id %}">profile</a>
                 </li>
 
                 <li class="nav-item disabled">
                     <a class="nav-link disabled text-capitalize" href="#">👋 <span style="color: #7192c6;
-                      text-shadow: -1px 1px 2px rgba(17,41,79,0.59);" class="text-capitalize fw-bold">{{user.first_name}} {{user.last_name}}</span> </a>
+                      text-shadow: -1px 1px 2px rgba(17,41,79,0.59);" class="text-capitalize fw-bold">{{request.user.first_name}} {{request.user.last_name}}</span> </a>
                 </li>
               {% else %}
               <li class="nav-item">
@@ -40,8 +40,8 @@
 
             {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="" tabindex="-1" aria-disabled="true"><img class="profile-img align-self-center"
-                  src="{% static 'img/8380015.jpg' %}" alt="profile-img"></a>
+              <a class="nav-link" href="{%url 'profile' request.user.id %}" tabindex="-1" aria-disabled="true"><img class="profile-img align-self-center"
+                  src="{{ request.user.avatar.image.url }}" alt="img for{{request.user.first_name}}"></a>
             </li>
             {% endif %}
           </ul>

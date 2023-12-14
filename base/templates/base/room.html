@@ -28,8 +28,8 @@
                         
                         <div class="room-detail">
                             <div class="d-flex flex-row ">
-                                <img class="profile-img align-self-center" src="{% static 'img/8380015.jpg' %}"
-                                    alt="profile-img">
+                                <img class="profile-img align-self-center" src="{{ room.host.avatar.image.url }}"
+                                    alt="img for{{room.host.first_name}}">
                                 <a href="" class=" p-2 flex-fill align-self-center"><span
                                         class="profile-email">@ {{ room.host.first_name}} {{ room.host.last_name }}</span></a>
                                 <span class="date-time p-3 align-self-center">{{room.created|timesince}} ago</span>
@@ -40,8 +40,8 @@
                                 {% for chat in chat_messages %}
                                 <div class="d-flex flex-row justify-content-between">
                                     <div>
-                                        <img class="profile-img align-self-center" src="{% static 'img/8380015.jpg' %}"
-                                            alt="profile-img">
+                                        <img class="profile-img align-self-center" src="{{chat.author.avatar.image.url }}"
+                                            alt="img for{{chat.author.first_name}}">
                                         <a href="" class=" p-2 "><span
                                                 class=" profile-email">@{{chat.author.first_name}} {{chat.author.last_name}}</span></a>
                                     </div>
@@ -83,9 +83,9 @@
                                     <p class="ps-5 m-0">username</p>
                                     <!-- username -->
                                     <div class="ps-2">
-                                        <img class="profile-img" src="{% static 'img/8380015.jpg' %}" alt="profile-img">
+                                        <img class="profile-img" src="{{user.avatar.image.url }}" alt="img for{{user.first_name}}">
                                         <a href="" class=" ps-2"><span
-                                                class="profile-email">@{{user.first_name}} {{user.last_name}}</span></a>
+                                                class="profile-email">@{{user.first_name}}</span></a>
                                                 <hr>
                                     </div>
                                 </div>

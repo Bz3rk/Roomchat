@@ -16,7 +16,7 @@ class Avatar(models.Model):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
-    avartar = models.ForeignKey(Avatar, on_delete=models.SET_NULL, null=True, blank=True)
+    avatar = models.ForeignKey(Avatar,on_delete=models.SET_DEFAULT, default="10", null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'

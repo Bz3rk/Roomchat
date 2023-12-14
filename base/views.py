@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Topic, Message, User, Room, Avatar
-from .forms import Register, RoomForm, AvatarForm
+from .forms import Register, RoomForm, ProfileUpdate
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -51,8 +51,8 @@ def loginPage(request):
             return redirect('home')
         else:
             messages.error(request, 'Email OR password does not exit')
-
     context = {'page': page}
+    
     return render(request, 'base/login_register.html', context)
 
 
@@ -74,7 +74,7 @@ def home(request):
         Q(host__first_name__icontains=q)
     )
 
-    p = Paginator(rooms, 5)
+    p = Paginator(rooms, 1)
     page_number = request.GET.get('page')
 
 
@@ -178,14 +178,37 @@ def roomChat(request, pk):
 
 def selectAvatar(request):
     avatars = Avatar.objects.all()
-    form = AvatarForm()
+
     if request.method == 'POST':
-        form = AvatarForm(request.POST)
-        if form.is_valid():
+        avatar_id = request.POST.get('avatar')
+        if avatar_id:
             user = request.user
-            user.avatar = form.cleaned_data['image']
+            avatar = Avatar.objects.get(id=avatar_id)
+            user.avatar = avatar
             user.save()
             return redirect('home')
 
-    context = {'avatars':avatars}
+    context = {'avatars': avatars}
     return render(request, 'base/avatar.html', context)
+
+
+def profile(request, pk):
+    user = User.objects.get(id = pk)
+
+    context = {'user':user}
+    return render(request, 'base/profile.html', context)
+
+
+def profileUpdate(request, pk):
+    user = User.objects.get(id = pk)
+    form = ProfileUpdate(instance=user)
+
+    if request.method == 'POST':
+        form = ProfileUpdate(request.POST, instance=user)
+        # print (form)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', user.id)
+
+    context = {'form': form}
+    return render(request, 'base/profile_update.html', context)

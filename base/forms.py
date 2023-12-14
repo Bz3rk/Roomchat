@@ -24,11 +24,6 @@ class Register(UserCreationForm):
         
         
 
-
-
-
-
-
 class RoomForm(ModelForm):
     class Meta:
         model = Room
@@ -46,18 +41,16 @@ class RoomForm(ModelForm):
 
 
 
-class AvatarForm(ModelForm):
+class ProfileUpdate(ModelForm):
     class Meta:
-        model = Avatar
-        fields = ['image']
+        model = User
+        fields = ['first_name', 'last_name', 'bio']
 
-    
-    
-        
+
     def __init__(self, *args, **kwargs):
-        super(AvatarForm, self).__init__(*args, **kwargs)
+        super(ProfileUpdate, self).__init__(*args, **kwargs)
 
 
-
-        self.fields['image'].widget.attrs.update({'class': 'form-control'})
-        
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Update your First name...'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Update your Last name...'})
+        self.fields['bio'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Tell the World a bit about yourself...', 'rows': '4', 'cols':'30'})
