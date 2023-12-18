@@ -176,22 +176,27 @@ def roomChat(request, pk):
     return render(request, 'base/room.html', context)
 
 
-def selectAvatar(request):
+@login_required(login_url='login')
+def selectAvatar(request, pk):
     avatars = Avatar.objects.all()
-
-    if request.method == 'POST':
-        avatar_id = request.POST.get('avatar')
-        if avatar_id:
-            user = request.user
-            avatar = Avatar.objects.get(id=avatar_id)
-            user.avatar = avatar
-            user.save()
-            return redirect('home')
+    user = User.objects.get(id=pk)
+    if request.user == user:
+        if request.method == 'POST':
+            avatar_id = request.POST.get('avatar')
+            if avatar_id:
+                # user = request.user
+                avatar = Avatar.objects.get(id=avatar_id)
+                user.avatar = avatar
+                user.save()
+                return redirect('home')
+    else:
+        return HttpResponse('<h1>Access denied</h1>')
 
     context = {'avatars': avatars}
     return render(request, 'base/avatar.html', context)
 
 
+@login_required(login_url='login')
 def profile(request, pk):
     user = User.objects.get(id = pk)
 
@@ -199,16 +204,20 @@ def profile(request, pk):
     return render(request, 'base/profile.html', context)
 
 
+@login_required(login_url='login')
 def profileUpdate(request, pk):
     user = User.objects.get(id = pk)
     form = ProfileUpdate(instance=user)
 
-    if request.method == 'POST':
-        form = ProfileUpdate(request.POST, instance=user)
-        # print (form)
-        if form.is_valid():
-            form.save()
-            return redirect('profile', user.id)
+    if request.user == user:
+        if request.method == 'POST':
+            form = ProfileUpdate(request.POST, instance=user)
+            # print (form)
+            if form.is_valid():
+                form.save()
+                return redirect('profile', user.id)
+    else:
+        return HttpResponse('<h1>Access denied</h1>')
 
     context = {'form': form}
     return render(request, 'base/profile_update.html', context)
