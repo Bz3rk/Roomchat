@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<main>
+    
+    <body>
+        {% block content %}
+        
+        {% include 'searchbar.html' %}
+
+
+        <!-- profile card -->
+
+  
+        <div class="container p-5">
+            <div class="profile-card" style="width: 100%; overflow-y: auto;">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="d-flex flex-row justify-content-between flex-wrap">
+                        {% for avatar in avatars %}
+                            <div class="text-center p-2 m-2 ps-4" onclick="selectAvatar('{{ avatar.id }}')">
+                                <label class="form-check-label">
+                                    <div class="form-check">
+                                        <input type="radio" name="avatar" value="{{ avatar.id }}" id="avatar_{{ avatar.id }}">
+                                        <img style="cursor: pointer;" class="profile-card-img overflow-scroll" src="{{ avatar.image.url }}" alt="avatar">
+                                    </div>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <center>
+                    <button class="btn" style="
+                        background-color: #3f3473 !important;
+                        color: whitesmoke !important;" type="submit">Save</button>
+                    </center>
+                </form>
+            </div>
+        </div>
+        {% endblock %}
+
+        <script src="static/js/bootstrap.js"></script>
+        <script src="static/js/script.js"></script>
+
+    </body>
+
+    </html>

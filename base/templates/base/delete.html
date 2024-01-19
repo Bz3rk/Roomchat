@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% include 'searchbar.html'%}
+
+
+<main>
+    <!-- room form -->
+    <div class=" mb-5 form-container login-container container-sm">
+        <h4 class="text-uppercase fw-bold">DEl {{obj|truncatechars:7}}</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <p class=" mt-3 mb-0 fs-5">Are you sure you want to delete ({{obj|truncatechars:7}})???</p>
+            <button style="background-color: #696d97 !important;" class="mt-4 me-4 " type="submit"><a class="room-cancel" href="{{request.META.HTTP_REFERER}}">Cancel</a></button>
+            <button class="mt-4" type="submit" value="confirm" >Submit</button>
+        </form>
+    </div>
+
+</main>
+{% endblock %}

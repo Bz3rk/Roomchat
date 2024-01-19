@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>{{user.first_name}} profile</title>
+{% endblock %}
+<main>
+    
+    <body>
+        {% block content %}
+        
+        {% include 'searchbar.html' %}
+  <!-- profile card -->
+
+  <div class="container p-5">
+    <div class="profile-card" style="width: 100%; overflow-y: auto;">
+      <center>
+      <img class="profile-card-img" src="{{user.avatar.image.url }}" alt="img for{{user.first_name}}">
+      {% if request.user == user %}
+      <a href="{%url 'select_avatar' user.id %}"><i class="bi bi-pencil-square"></i></a>
+      {% endif %}
+      
+      <div class="card-body">
+        <h6 class="">username</h6>
+        <span class="profile-email">@{{user.first_name}}{{ user.last_name}}</span>
+        <div>
+          {% if request.user == user %}
+          <button class="btn btn-primary" type="submit"><a style="color: #709be0;" href="{%url 'profile_update' user.id %}">Edit Profile</a></button>
+          {% endif %}
+      </div>
+      </center>
+      <h6  class="about">About:</h6>
+
+      <p class="">{{user.bio|linebreaksbr}}</p>
+
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+  <script src="static/js/bootstrap.js"></script>
+  <script src="static/js/script.js"></script>
+
+</body>
+
+</html>

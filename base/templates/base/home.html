@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>Home</title>
+    {% endblock %}
+</head>
+
+<body>
+  {% block content %}
+  
+  {% include 'searchbar.html' %}
+    
+<main>
+  <div class="container p-2 pt-0">
+    <div class=" row">
+
+      <!-- Topics -->
+      <div class="col-lg-4">
+        <div class="topic-head">
+          <h5 class="text-uppercase fw-1">Topics</h5>  
+          <span class="pe-5 fw-bold">{{topics.count}} Topics</span>
+        </div>
+
+
+        <ul class="topic-links">
+          {% for topic in topics %}
+          <li class="fs-5 topic-links"><a href="?q={{topic.name}}">{{topic.name}}</a><i class="bi bi-caret-down-square-fill"></i>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- rooms -->
+      <div class="col-lg-6">
+        <div class="topic-head">
+        <h5 class="text-uppercase">Rooms</h5>
+        <span class="pe-5 fw-bold">{{rooms.count}} Room(s)</span>
+      </div>
+        <!-- room card start -->
+        
+        {% for page in page_obj %}
+        <div class="container rooms p-3 mb-2">
+          <div class="d-flex flex-row align-self-center">
+            <img class="profile-img align-self-center" src="{{ page.host.avatar.image.url }}" alt="img for{{page.host.first_name}}">
+            <a href="{%url 'profile' page.host.id %}" class=" p-2 flex-fill align-self-center"><span
+              class="profile-email">{{page.host.email}}</span></a>
+              <span class="date-time p-3 align-self-center">{{page.updated | timesince}} ago</span>
+            </div>
+            <div class="p-3">
+              <h5><a class="about-room" href="{% url 'room_chat' page.id %}">{{page.name}}</a></h5>
+              <hr class="mt-5">
+              
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <i class="bi bi-people p-2"></i><span>{{ page.members.count }} joined </span>
+                  
+                </div>
+                {% if page.host == request.user %}
+                <div class="d-flex align-items-center">
+                  <a  id="edit-room" class="page-link m-2" href="{% url 'update_room' page.id %}"><i class=" bi bi-pencil"></i></a>
+                  <a id="delete-room" class="page-link" href="{% url 'delete' page.id %}"><i class="bi bi-x"></i></a>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- room card end -->
+
+          
+        <!-- pagination -->
+<nav>
+  <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+          <li class="page-item">
+              <a class="page-link" href="?page=1">First</a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          </li>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+          <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+              <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+          </li>
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+          <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+          </li>
+      {% endif %}
+  </ul>
+</nav>
+
+
+      </div>
+    </div>
+  </div>
+
+  
+
+</main>
+    {% endblock %}
+</body>
+
+</html>
+

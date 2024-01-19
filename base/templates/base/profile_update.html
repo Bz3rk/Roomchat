@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>{{room.name}}</title>
+{% endblock %}
+
+<main>
+    
+<body>
+        {% block content %}
+        
+        {% include 'searchbar.html' %}
+
+<main>
+    <!-- profile edit form -->
+    <div class="mb-5 form-container signup-container container-sm">
+        <h5 class="text-uppercase">edit your profile</h5>
+        <form action="" method="POST">
+          {% csrf_token %}
+          
+
+
+
+            <label for="Email">First name</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-person"></i></span>
+                {{form.first_name}}
+            </div>
+            
+            <label for="Email">Last name</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-person"></i></span>
+                {{form.last_name}}
+            </div>
+
+
+
+            <label for="Room name">Bio</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-chat-dots"></i></span>
+                {{form.bio}}
+            </div>
+
+            <button style="background-color: #696d97 !important;" class="mt-4 me-4 " type="submit"><a class="room-cancel" href="">Cancel</a></button>
+            <button class="mt-4" type="submit">Submit</button>
+        </form>
+    </div>
+</main>
+{% endblock %}
+
+<script src="static/js/bootstrap.js"></script>
+<script src="static/js/script.js"></script>
+
+</body>
+
+</html>

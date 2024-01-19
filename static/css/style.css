@@ -1,0 +1,329 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Nova+Mono&display=swap');
+
+
+
+
+
+body {
+        background-image: url('../img/wickedbackground.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        color: whitesmoke;
+        scroll-behavior: smooth;
+        opacity: 0; 
+        animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+ 
+.page-item{
+    margin: 0.2rem !important;
+}
+
+.page-link{
+    color:whitesmoke !important;
+    background-color: #50448e !important;
+    border: #4f7cc2 solid 2px !important;
+}
+#edit-room, #delete-room{
+    border-radius: 0.3rem !important;
+}
+
+.page-link:hover{
+    background-color: #4f7cc2 !important;
+}
+
+.nav-text-color {
+    color: #fff !important;
+}
+
+.navbar-nav .nav-link {
+    color: #fff !important; /* Change this to your desired color */
+  }
+  .navbar-nav .nav-link:hover, .navbar span:hover{
+    color: #4f7cc2 !important;
+    text-shadow: -1px 1px 2px rgba(17,41,79,0.59);
+  }
+
+
+.topic-links a:hover, .profile-email:hover, .about-room:hover{
+    color: #4f7cc2;
+    text-shadow: -1px 1px 2px rgba(17,41,79,0.59);
+    
+    /* background-color: #315b9e;
+    border: #06214d;
+    box-shadow: 10px 46px 54px -34px rgba(27,39,65,0.71);
+    -webkit-box-shadow: 10px 46px 54px -34px rgba(27,39,65,0.71);
+    -moz-box-shadow: 10px 46px 54px -34px rgba(27,39,65,0.71); */
+}
+
+.topic-head{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+h3, h4, h5, h6{
+    font-family: 'Nova Mono', sans-serif;
+}
+
+ul{
+    padding: 0.25rem;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0.5rem;
+    list-style-type: none;
+}
+
+a, span {
+    text-decoration: none;
+    color: whitesmoke;
+    font-family: monospace;
+}
+
+.profile-img{
+    width: 35px ;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff; 
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    box-shadow: -4px -2px 32px -5px rgba(17,41,79,0.83);
+-webkit-box-shadow: -4px -2px 32px -5px rgba(17,41,79,0.83);
+-moz-box-shadow: -4px -2px 32px -5px rgba(17,41,79,0.83);
+}
+
+
+.rooms{
+    width: 100%;
+    /* height: 30vh; */
+    border-radius: 0.5rem;
+    background: #3f3473;
+background: linear-gradient(90deg,#3f3473 0%, #50448e 80%);
+background: -webkit-linear-gradient(90deg,#3f3473 0%, #50448e 80%);
+background: -moz-linear-gradient(90deg,#3f3473 0%, #50448e 80%);
+box-shadow: -5px 1px 22px -8px rgba(17,41,79,0.8);
+-webkit-box-shadow: -5px 1px 22px -8px rgba(17,41,79,0.8);
+-moz-box-shadow: -5px 1px 22px -8px rgba(17,41,79,0.8);
+}
+
+
+/* room styling */
+
+.room-header{
+    background-color: #3f3473;
+    height : 2rem;
+    border-radius: 4px;
+}
+
+ button .room-cancel:hover{
+    color: whitesmoke !important;
+}
+.room-body{
+    background: #50448e;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    width: 100%;
+    
+}
+.room-detail{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 65vh;
+    
+}
+
+
+
+.container-detail{
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    overflow-y: auto;
+}
+input, textarea, .icon-input{
+    background-color: #3f3473 !important;
+    border: 1px solid #4f7cc2 !important;
+    color: whitesmoke !important;
+    box-shadow: -5px 1px 22px -8px rgba(17,41,79,0.8);
+-webkit-box-shadow: -5px 1px 22px -8px rgba(17,41,79,0.8);
+-moz-box-shadow: -5px 1px 22px -8px rgba(17,41,79,0.8);
+}
+input::placeholder{
+    color: whitesmoke !important;
+    letter-spacing: 1px;
+    font-family: 'Monteserrat', sans-serif;
+    font-size: small;
+}
+button{
+    background: #50448e !important;
+    border: none !important;
+    font-family: 'Montsserat', sans-serif;;
+}
+button:hover{
+    background: #3f3473 !important;
+}
+
+
+.chatbox{
+        
+        height: 100%;
+        border: 1px solid #3f3473;
+        overflow-y: auto; /* Enable vertical scrollbar when content exceeds the height */
+        background-color: #3f3473;
+        padding: 10px;
+        border-radius: 8px;
+    }  
+.message {
+        color: whitesmoke;
+        padding: 2px;
+        margin-bottom: 4px;
+        border-radius: 4px;
+    }
+
+    .delete-icon {
+        cursor: pointer;
+        color: #ff0000;
+    }
+
+    .modal-body {
+        text-align: center;
+    }
+
+    /* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #3f3473;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #50448e;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4f7cc2;
+  }
+
+
+
+/* Login and Sign-up styling */
+
+/* Shared styles for login and sign-up forms */
+.form-container {
+    max-width: 50%;
+    margin: 0 auto;
+    text-align: start;
+    background-color: #3f3473;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    color: whitesmoke;
+    padding: 20px;
+    margin-top: 100px;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: whitesmoke;
+    text-align: left;
+    font-family: 'monospace', sans-serif;
+    padding-top: 1rem;
+    font-size: 0.9rem;
+    
+}
+
+
+.form-container button {
+    background: #50448e !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: none !important;
+    color: whitesmoke;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 0.5rem;
+}
+
+.form-container button:hover {
+    background: #3f3473 !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Login form specific styles */
+.login-container {
+    text-align: center;
+}
+
+/* Sign-up form specific styles */
+.signup-container {
+    text-align: center;
+}
+
+/* Responsive styles for small screens */
+@media (max-width: 576px) {
+    .form-container {
+        max-width: 70% !important;
+    }
+}
+
+
+.profile-card{
+    padding:20px;
+    background-color: #50448e;
+    color: whitesmoke;
+    height: 60vh;
+    border-radius: 1rem;
+}
+
+.profile-card-img{
+    width: 10rem ;
+    height: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff; 
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    box-shadow: -4px -2px 32px -5px rgba(17,41,79,0.83);
+-webkit-box-shadow: -4px -2px 32px -5px rgba(17,41,79,0.83);
+-moz-box-shadow: -4px -2px 32px -5px rgba(17,41,79,0.83)
+}
+
+
+
+.about{
+    letter-spacing: 5px; 
+    font-size: 1.3rem; 
+    font-weight: bold;
+    color: #4f7cc2;
+    text-shadow: -1px 1px 2px rgba(17,41,79,0.59);
+}
+  
+
+
+  
+@media (max-width: 576px) {
+    /* Styles for screens smaller than 576px (e.g., mobile devices) */
+    .container-sm {
+      width: 100% !important;
+    }
+  }

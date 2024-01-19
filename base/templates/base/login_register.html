@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<main>
+    <!-- login form -->
+    {% if page == 'login' %}
+    <div class=" mb-5 form-container login-container container">
+        <h3 class="text-uppercase">Login</h3>
+        <form method="POST" action="">
+          {% csrf_token %}
+            <label for="Email">Email</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-envelope-at"></i></span>
+                <input type="email" class="form-control" name="email" placeholder="Enter your email...">
+            </div>
+
+            <label for="loginPassword">Password</label>
+            <div class="input-group  mt-1 mb-2">
+                <span class="input-group-text icon-input"><i class="bi bi-key"></i></span>
+                <input type="password" class="form-control" name="password" placeholder="Enter your password...">
+            </div>
+    
+            <button class="mt-4" type="submit">Sign In</button>
+        </form>
+    </div>
+
+    {% else %}
+    <!-- signup form -->
+    <div class=" mb-5 form-container signup-container container-sm">
+        <h3 class="text-uppercase">Sign Up</h3>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="signupUsername">{{form.email.label}}:</label>
+            {{form.email}}
+            <span class="text-info">{{form.email.errors}}</span>
+
+            <label for="signupEmail">{{form.first_name.label}}:</label>
+            {{form.first_name}}
+            <span class="text-info">{{form.first_name.errors}}</span>
+    
+            <label for="signupPassword">{{form.last_name.label}}:</label>
+            {{form.last_name}}
+            <span class="text-info">{{form.last_name.errors}}</span>
+
+            <label for="signupPassword">{{form.password1.label}}:</label>
+            {{form.password1}}
+            <span class="text-info">{{form.password1.errors}}</span>
+
+            <label for="signupPassword">{{form.password2.label}}:</label>
+            {{form.password2}}
+            <span class="text-info fst-italic lh-sm">{{form.password2.errors}}</span>
+            <p class="mt-4">Already signed up?
+              <a style="color: #4f7cc2;" class="ms-2" href="{% url 'login' %}">Login</a></p>
+            <button class="mt-1" type="submit">Sign Up</button>
+        </form>
+    </div>
+
+    {% endif %}
+    
+</main>
+{% endblock %}
+
