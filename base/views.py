@@ -76,7 +76,7 @@ def home(request):
         Q(host__first_name__icontains=q)
     )
 
-    p = Paginator(rooms, 1)
+    p = Paginator(rooms, 10)
     page_number = request.GET.get('page')
 
 
@@ -151,27 +151,20 @@ def deleteMessage(request, pk):
     context = {'obj': obj}
     return render(request, 'base/delete.html', context)
 
-
+@login_required(login_url='login')
 def roomChat(request, pk):
     user = request.user
     room = Room.objects.get(id=pk)
     chat_messages = room.message_set.all()
     members =  room.members.all() 
-    # print(members)
     if request.method == 'POST':
-        body = request.POST.get('text')
-        # print(body)
-        if user.is_authenticated:
-            if body != "":
-                message = Message.objects.create(
-                    room = room,
-                    author = user,
-                    body = body
-                )
-                room.members.add(user)
-            return redirect('room_chat', pk=room.id)
-        else:
-            return HttpResponse('<h1>Internal server error</h1>')
+        body = request.POST['text']
+        Message.objects.create(
+            body = body,
+            author = user, 
+            room = room
+        )
+        room.members.add(user)
     context = {'room': room, 'chat_messages' : chat_messages, 'members' : members}
     return render(request, 'base/room.html', context)
 

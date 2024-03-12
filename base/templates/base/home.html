@@ -3,67 +3,74 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %}
-    <title>Home</title>
-    {% endblock %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block title %}
+  <title>Home</title>
+  {% endblock %}
 </head>
 
 <body>
   {% block content %}
-  
-  {% include 'searchbar.html' %}
-    
-<main>
-  <div class="container p-2 pt-0">
-    <div class=" row">
 
-      <!-- Topics -->
-      <div class="col-lg-4">
-        <div class="topic-head">
-          <h5 class="text-uppercase fw-1">Topics</h5>  
-          <span class="pe-5 fw-bold">{{topics.count}} Topics</span>
+  {% include 'searchbar.html' %}
+
+  <main>
+    <div class="">
+      <div class="grid md:grid-cols-3 gap-6 px-8 sm:px-28 py-16">
+
+        <!-- Topics -->
+        <div class="hidden sm:flex flex-col gap-4 ">
+          <div class="flex justify-between items-center ">
+            <button class=" ">
+              <h5 class="text-2xl topicReveal text-sky-800">Topics</h5>
+            </button>
+            <span class="hidden sm:block text-sky-700">{{topics.count}} Topics</span>
+          </div>
+
+
+          <ul class="">
+            {% for topic in topics %}
+            <li class="mt-2 hover:text-sky-600 text-lg"><a href="?q={{topic.name}}">{{topic.name}}</a><i
+                class="bi bi-caret-down-square-fill"></i>
+            </li>
+            {% endfor %}
+          </ul>
         </div>
 
+        <!-- rooms -->
+        <div class="col-span-2  ">
+          <div class="flex items-center justify-between pb-4">
+            <h5 class="text-2xl text-sky-800">Rooms</h5>
+            <span class="text-sky-700">{{rooms.count}} Room(s)</span>
+          </div>
+          <!-- room card start -->
 
-        <ul class="topic-links">
-          {% for topic in topics %}
-          <li class="fs-5 topic-links"><a href="?q={{topic.name}}">{{topic.name}}</a><i class="bi bi-caret-down-square-fill"></i>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-
-      <!-- rooms -->
-      <div class="col-lg-6">
-        <div class="topic-head">
-        <h5 class="text-uppercase">Rooms</h5>
-        <span class="pe-5 fw-bold">{{rooms.count}} Room(s)</span>
-      </div>
-        <!-- room card start -->
-        
-        {% for page in page_obj %}
-        <div class="container rooms p-3 mb-2">
-          <div class="d-flex flex-row align-self-center">
-            <img class="profile-img align-self-center" src="{{ page.host.avatar.image.url }}" alt="img for{{page.host.first_name}}">
-            <a href="{%url 'profile' page.host.id %}" class=" p-2 flex-fill align-self-center"><span
-              class="profile-email">{{page.host.email}}</span></a>
-              <span class="date-time p-3 align-self-center">{{page.updated | timesince}} ago</span>
+          {% for page in page_obj %}
+          <div class=" bg-gray-200 rounded p-4 shadow-lg mt-2">
+            <div class=" flex items-center justify-between mb-4">
+              <div class="flex gap-3 items-center">
+                <img class="w-10 h-10 border-2 border-gray-150 rounded-full" src="{{ page.host.avatar.image.url }}"
+                  alt="img for{{page.host.first_name}}">
+                <a href="{%url 'profile' page.host.id %}" class="hover:text-sky-600"><span
+                    class="text-sm md:text-lg text-sky-800">{{page.host.email}}</span></a>
+              </div>
+              <span class=" text-xs md:text-sm">{{page.updated | timesince}} ago</span>
             </div>
-            <div class="p-3">
-              <h5><a class="about-room" href="{% url 'room_chat' page.id %}">{{page.name}}</a></h5>
-              <hr class="mt-5">
-              
-              <div class="d-flex align-items-center justify-content-between">
+            <div class=" ">
+              <h5><a class=" text-2xl md:text-4xl text-sky-800 " href="{% url 'room_chat' page.id %}">{{page.name}}</a>
+              </h5>
+              <hr class="border-sky-500 mt-4">
+
+              <div class="mt-2">
                 <div>
-                  <i class="bi bi-people p-2"></i><span>{{ page.members.count }} joined </span>
-                  
+                  <i></i><span class="text-sm">{{ page.members.count }} joined </span>
+
                 </div>
                 {% if page.host == request.user %}
-                <div class="d-flex align-items-center">
-                  <a  id="edit-room" class="page-link m-2" href="{% url 'update_room' page.id %}"><i class=" bi bi-pencil"></i></a>
-                  <a id="delete-room" class="page-link" href="{% url 'delete' page.id %}"><i class="bi bi-x"></i></a>
+                <div class="">
+                  <a id="edit-room" class="" href="{% url 'update_room' page.id %}"><i class=" bi bi-pencil"></i></a>
+                  <a id="delete-room" class="" href="{% url 'delete' page.id %}"><i class="bi bi-x"></i></a>
                 </div>
                 {% endif %}
               </div>
@@ -72,46 +79,47 @@
           {% endfor %}
           <!-- room card end -->
 
-          
-        <!-- pagination -->
-<nav>
-  <ul class="pagination justify-content-center">
-      {% if page_obj.has_previous %}
-          <li class="page-item">
-              <a class="page-link" href="?page=1">First</a>
-          </li>
-          <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-          </li>
-      {% endif %}
 
-      {% for num in page_obj.paginator.page_range %}
-          <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-              <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-          </li>
-      {% endfor %}
+          <!-- pagination -->
+          <nav class="mt-4">
+            <ul class="flex gap-2 justify-center ">
+              {% if page_obj.has_previous %}
+              <li class="border-sky-700 border-2 rounded px-2 hover:bg-sky-700 hover:text-white">
+                <a class="" href="?page=1">First</a>
+              </li>
+              <li class="border-sky-700 border-2 rounded px-2 hover:bg-sky-700 hover:text-white">
+                <a class="" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+              </li>
+              {% endif %}
 
-      {% if page_obj.has_next %}
-          <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-          </li>
-          <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-          </li>
-      {% endif %}
-  </ul>
-</nav>
+              {% for num in page_obj.paginator.page_range %}
+
+              <li
+                class="border-sky-700 border-2 rounded px-2 hover:bg-sky-700 hover:text-white {% if page_obj.number == num %}active{% endif %} ">
+                <a class="" href="?page={{ num }}">{{ num }}</a>
+              </li>
+              {% endfor %}
+
+              {% if page_obj.has_next %}
+              <li class=" border-sky-700 border-2 rounded px-2 hover:bg-sky-700 hover:text-white">
+                <a class="" href="?page={{ page_obj.next_page_number }}">Next</a>
+              </li>
+              <li class="border-sky-700 border-2 rounded px-2 hover:bg-sky-700 hover:text-white">
+                <a class="" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
 
 
+        </div>
       </div>
     </div>
-  </div>
 
-  
 
-</main>
-    {% endblock %}
+
+  </main>
+  {% endblock %}
 </body>
 
 </html>
-
